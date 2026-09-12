@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Goppy AI — Cyberpunk Gemini AI</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap');
+:root{--red:#ff1744;--red2:#8b001f;--bg:#070709;--panel:#101014;--line:#35111a;--text:#f6e9ec;--muted:#9b858b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#3b0713 0,#0b080a 32%,#050507 75%);color:var(--text);font-family:Rajdhani,sans-serif;min-height:100vh;overflow:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,23,68,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,23,68,.025) 1px,transparent 1px);background-size:35px 35px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+.hidden{display:none!important}.screen{height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:min(430px,100%);background:rgba(14,14,18,.94);border:1px solid #521321;border-radius:22px;padding:32px;box-shadow:0 0 50px #ff174418, inset 0 0 30px #ff174408;position:relative;overflow:hidden}
+.card:after{content:"";position:absolute;top:0;left:-100%;width:50%;height:2px;background:var(--red);box-shadow:0 0 20px var(--red);animation:scan 3s linear infinite}
+@keyframes scan{to{left:200%}}.brand{text-align:center;font-family:Orbitron;color:var(--red);font-size:30px;font-weight:800;letter-spacing:3px;text-shadow:0 0 18px #ff174466}.sub{text-align:center;color:var(--muted);margin:7px 0 25px}
+label{display:block;font-size:13px;color:#d8b9c0;margin:13px 0 7px;letter-spacing:1px}input,textarea,select{width:100%;border:1px solid #46131e;background:#08080b;color:#fff;border-radius:11px;padding:13px;font:inherit;outline:none}input:focus,textarea:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px #ff174414}
+button{border:0;border-radius:11px;padding:12px 16px;background:linear-gradient(135deg,#ff1744,#9d0024);color:#fff;font-family:Orbitron;font-size:11px;letter-spacing:.7px;cursor:pointer;box-shadow:0 0 18px #ff174426;transition:.2s}button:hover{transform:translateY(-1px);filter:brightness(1.12)}button.secondary{background:#17171c;border:1px solid #45202a;color:#e8cfd4;box-shadow:none}.row{display:flex;gap:9px}.row>*{flex:1}.msg{font-size:13px;color:#ff7c94;text-align:center;min-height:18px;margin-top:12px}
+.app{height:100vh;display:grid;grid-template-columns:260px 1fr}.side{background:rgba(8,8,11,.94);border-right:1px solid var(--line);padding:18px;display:flex;flex-direction:column}.logo{font-family:Orbitron;color:var(--red);font-size:20px;letter-spacing:2px}.side small{color:var(--muted)}.new{margin:20px 0}.history{overflow:auto;flex:1}.history div{padding:10px;border-radius:9px;color:#bba6ab;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.history div:hover{background:#1a0e12;color:#fff}.userbox{border-top:1px solid var(--line);padding-top:15px;display:flex;justify-content:space-between;align-items:center}.main{display:flex;flex-direction:column;min-width:0}.top{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:#09090cbb;backdrop-filter:blur(10px)}.status{font-size:12px;color:#74ff9b}.status i{display:inline-block;width:7px;height:7px;background:#45ff7a;border-radius:50%;box-shadow:0 0 10px #45ff7a;margin-right:7px}.chat{flex:1;overflow:auto;padding:30px max(18px,calc((100% - 900px)/2));scroll-behavior:smooth}.welcome{text-align:center;margin:12vh auto 30px;max-width:650px}.welcome h1{font-family:Orbitron;font-size:clamp(25px,5vw,45px);margin:0;color:#fff}.welcome h1 span{color:var(--red);text-shadow:0 0 25px #ff174455}.welcome p{color:var(--muted)}.bubble{display:flex;margin:14px 0;gap:11px;animation:up .25s ease}.bubble.user{justify-content:flex-end}.avatar{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#240811;border:1px solid #641426;color:var(--red);font-family:Orbitron;font-size:11px;flex:none}.content{max-width:min(760px,85%);background:#111116;border:1px solid #2b171d;border-radius:14px;padding:13px 15px;line-height:1.55;white-space:pre-wrap}.user .content{background:linear-gradient(135deg,#4d0a19,#270812);border-color:#73162b}.typing{display:flex;gap:5px;align-items:center}.typing b{width:6px;height:6px;border-radius:50%;background:var(--red);animation:dot 1s infinite}.typing b:nth-child(2){animation-delay:.15s}.typing b:nth-child(3){animation-delay:.3s}@keyframes dot{50%{opacity:.2;transform:translateY(-4px)}}@keyframes up{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.composer{padding:12px max(18px,calc((100% - 900px)/2)) 18px;background:linear-gradient(transparent,#070709 25%)}.compose{display:flex;gap:9px;background:#101014;border:1px solid #3b151e;border-radius:16px;padding:8px;box-shadow:0 0 35px #000}.compose textarea{resize:none;border:0;background:transparent;min-height:42px;max-height:140px}.compose textarea:focus{box-shadow:none}.send{width:50px}.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;padding:18px;z-index:5}.modal .card{max-width:520px}.danger{color:#ff7188}.hint{font-size:12px;color:#8e777d;margin-top:8px;line-height:1.4}
+@media(max-width:700px){.app{grid-template-columns:1fr}.side{display:none}.top{height:58px}.chat{padding:20px 12px}.composer{padding:8px 10px 12px}.content{max-width:90%}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="screen">
+  <div class="card">
+    <div class="brand">GOPPY AI</div>
+    <div class="sub">NEURAL CHAT SYSTEM // ACCESS PORTAL</div>
+    <label>USERNAME</label><input id="loginUser" autocomplete="username" placeholder="Masukkan username">
+    <label>PASSWORD</label><input id="loginPass" type="password" autocomplete="current-password" placeholder="Masukkan password">
+    <button style="width:100%;margin-top:18px" onclick="login()">ACCESS SYSTEM</button>
+    <div class="row" style="margin-top:10px"><button class="secondary" onclick="showRegister()">CREATE ACCOUNT</button><button class="secondary" onclick="ownerInfo()">OWNER</button></div>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+</div>
+
+<div id="registerScreen" class="screen hidden">
+  <div class="card">
+    <div class="brand">REGISTER</div><div class="sub">CREATE PUBLIC ACCESS</div>
+    <label>USERNAME</label><input id="regUser" placeholder="Username">
+    <label>PASSWORD</label><input id="regPass" type="password" placeholder="Password">
+    <label>CONFIRM PASSWORD</label><input id="regPass2" type="password" placeholder="Ulangi password">
+    <button style="width:100%;margin-top:18px" onclick="register()">CREATE ACCOUNT</button>
+    <button class="secondary" style="width:100%;margin-top:10px" onclick="showLogin()">BACK TO LOGIN</button>
+    <div id="regMsg" class="msg"></div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+ <aside class="side">
+  <div class="logo">GOPPY AI</div><small>CYBERPUNK NEURAL CORE</small>
+  <button class="new" onclick="newChat()">+ NEW CHAT</button>
+  <div id="history" class="history"></div>
+  <div class="userbox"><div><b id="who"></b><br><small id="role"></small></div><button class="secondary" onclick="logout()">EXIT</button></div>
+ </aside>
+ <main class="main">
+  <header class="top"><div><b>GOPPY // CHAT</b></div><div class="status"><i></i>CORE ONLINE</div><button id="ownerBtn" class="secondary hidden" onclick="openOwner()">OWNER PANEL</button></header>
+  <section id="chat" class="chat">
+   <div id="welcome" class="welcome"><h1>WELCOME TO <span>GOPPY AI</span></h1><p>Ask anything. Powered by your configured Gemini API.</p></div>
+  </section>
+  <div class="composer"><div class="compose"><textarea id="prompt" placeholder="Tulis pesan ke Goppy AI..." onkeydown="keySend(event)"></textarea><button class="send" onclick="send()">➤</button></div></div>
+ </main>
+</div>
+
+<div id="ownerModal" class="modal hidden">
+ <div class="card">
+  <div class="brand" style="font-size:22px">OWNER CORE</div><div class="sub">AI CONFIGURATION</div>
+  <label>GEMINI API KEY</label><input id="apiKey" type="password" placeholder="Paste API key Gemini di sini">
+  <label>MODEL</label><input id="model" value="gemini-2.5-flash" placeholder="Contoh: gemini-2.5-flash">
+  <div class="hint">API key disimpan di browser ini. Untuk website publik, ini <b>bukan penyimpanan aman</b> karena JavaScript client-side dapat diperiksa pengunjung.</div>
+  <div class="row" style="margin-top:18px"><button onclick="saveConfig()">SAVE CONFIG</button><button class="secondary" onclick="closeOwner()">CLOSE</button></div>
+  <div id="ownerMsg" class="msg"></div>
+ </div>
+</div>
+
+<script>
+const OWNER_USER="goppy_owner";
+const OWNER_PASS="change-this-owner-password";
+let currentUser=null, messages=[], chatTitle="New Chat";
+
+function $(id){return document.getElementById(id)}
+function getUsers(){return JSON.parse(localStorage.getItem("goppy_users")||"{}")}
+function setUsers(x){localStorage.setItem("goppy_users",JSON.stringify(x))}
+function showLogin(){$("loginScreen").classList.remove("hidden");$("registerScreen").classList.add("hidden")}
+function showRegister(){$("loginScreen").classList.add("hidden");$("registerScreen").classList.remove("hidden")}
+function ownerInfo(){ $("loginMsg").textContent="Owner login tersedia lewat akun owner yang dikonfigurasi di source. Ganti kredensial sebelum deploy."}
+function register(){
+ let u=$("regUser").value.trim(),p=$("regPass").value,p2=$("regPass2").value,users=getUsers();
+ if(!u||!p)return $("regMsg").textContent="Username dan password wajib diisi.";
+ if(u.toLowerCase()===OWNER_USER)return $("regMsg").textContent="Username reserved.";
+ if(p!==p2)return $("regMsg").textContent="Password tidak sama.";
+ if(users[u])return $("regMsg").textContent="Username sudah digunakan.";
+ users[u]={password:p};setUsers(users);$("regMsg").textContent="Akun dibuat. Silakan login.";setTimeout(showLogin,700)
+}
+function login(){
+ let u=$("loginUser").value.trim(),p=$("loginPass").value;
+ if(u===OWNER_USER&&p===OWNER_PASS){enter({username:u,owner:true});return}
+ let users=getUsers();if(users[u]&&users[u].password===p){enter({username:u,owner:false});return}
+ $("loginMsg").textContent="Username atau password salah."
+}
+function enter(user){
+ currentUser=user;sessionStorage.setItem("goppy_session",JSON.stringify(user));
+ $("loginScreen").classList.add("hidden");$("registerScreen").classList.add("hidden");$("app").classList.remove("hidden");
+ $("who").textContent=user.username;$("role").textContent=user.owner?"OWNER / ADMIN":"PUBLIC USER";
+ $("ownerBtn").classList.toggle("hidden",!user.owner);newChat()
+}
+function logout(){sessionStorage.removeItem("goppy_session");location.reload()}
+function newChat(){messages=[];chatTitle="New Chat";$("chat").innerHTML='<div id="welcome" class="welcome"><h1>WELCOME TO <span>GOPPY AI</span></h1><p>Ask anything. Powered by your configured Gemini API.</p></div>';renderHistory()}
+function renderHistory(){let h=JSON.parse(localStorage.getItem("goppy_history_"+currentUser.username)||"[]");$("history").innerHTML=h.slice(-20).reverse().map(x=>`<div title="${esc(x)}">${esc(x)}</div>`).join("")}
+function saveHistory(title){let k="goppy_history_"+currentUser.username,h=JSON.parse(localStorage.getItem(k)||"[]");h.push(title);localStorage.setItem(k,JSON.stringify(h.slice(-30)));renderHistory()}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function addBubble(text,who){
+ $("welcome")?.remove();let b=document.createElement("div");b.className="bubble "+who;
+ b.innerHTML=(who==="user"?'<div class="content">'+esc(text)+'</div><div class="avatar">YOU</div>':'<div class="avatar">GAI</div><div class="content">'+esc(text)+'</div>');
+ $("chat").appendChild(b);$("chat").scrollTop=$("chat").scrollHeight;return b
+}
+function loading(){let b=document.createElement("div");b.className="bubble";b.id="loader";b.innerHTML='<div class="avatar">GAI</div><div class="content"><div class="typing"><b></b><b></b><b></b><span style="margin-left:6px;color:#9b858b">Goppy is thinking...</span></div></div>';$("chat").appendChild(b);$("chat").scrollTop=$("chat").scrollHeight}
+function keySend(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}}
+async function send(){
+ let text=$("prompt").value.trim();if(!text)return;
+ let key=localStorage.getItem("goppy_api_key"),model=localStorage.getItem("goppy_model")||"gemini-2.5-flash";
+ if(!key){addBubble("API belum dikonfigurasi. Owner harus membuka OWNER PANEL dan menempelkan API key Gemini.","ai");return}
+ $("prompt").value="";addBubble(text,"user");messages.push({role:"user",parts:[{text}]});loading();
+ if(chatTitle==="New Chat"){chatTitle=text.slice(0,40);saveHistory(chatTitle)}
+ try{
+  const url="https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(model)+":generateContent?key="+encodeURIComponent(key);
+  const body={contents:messages};
+  const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const data=await r.json();$("loader")?.remove();
+  if(!r.ok)throw new Error(data?.error?.message||"Gemini API error");
+  const out=data?.candidates?.[0]?.content?.parts?.map(p=>p.text||"").join("")||"Tidak ada respons.";
+  messages.push({role:"model",parts:[{text:out}]});typeAI(out);
+ }catch(e){$("loader")?.remove();addBubble("ERROR: "+e.message,"ai")}
+}
+function typeAI(text){
+ $("welcome")?.remove();let b=document.createElement("div");b.className="bubble";b.innerHTML='<div class="avatar">GAI</div><div class="content"></div>';$("chat").appendChild(b);
+ let c=b.querySelector(".content"),i=0;c.textContent="";
+ let timer=setInterval(()=>{c.textContent=text.slice(0,i+=3);$("chat").scrollTop=$("chat").scrollHeight;if(i>=text.length)clearInterval(timer)},12)
+}
+function openOwner(){if(!currentUser?.owner)return;$("apiKey").value=localStorage.getItem("goppy_api_key")||"";$("model").value=localStorage.getItem("goppy_model")||"gemini-2.5-flash";$("ownerModal").classList.remove("hidden")}
+function closeOwner(){$("ownerModal").classList.add("hidden")}
+function saveConfig(){
+ let k=$("apiKey").value.trim(),m=$("model").value.trim()||"gemini-2.5-flash";
+ if(!k)return $("ownerMsg").textContent="API key wajib diisi.";
+ localStorage.setItem("goppy_api_key",k);localStorage.setItem("goppy_model",m);$("ownerMsg").textContent="Konfigurasi tersimpan di browser ini.";setTimeout(closeOwner,700)
+}
+(function(){let s=sessionStorage.getItem("goppy_session");if(s){try{enter(JSON.parse(s))}catch{}}})();
+</script>
+</body>
+</html>
